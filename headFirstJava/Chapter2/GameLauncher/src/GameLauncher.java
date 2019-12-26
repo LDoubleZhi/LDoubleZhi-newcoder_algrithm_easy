@@ -66,7 +66,7 @@ class GuessGame{
 /**
  * @author : liulinzhi
  * @date: 2019/12/26/14:06
- * @description:
+ * @description: gameLauncher只作为一个程序入口，测试类为GuessGame
  */
 public class GameLauncher {
     public static void main(String[] args){
