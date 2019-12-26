@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 /**
  * @author : liulinzhi
@@ -26,26 +27,26 @@ class GameHelper{
     }
 }
 class SimpleDotCom{
-    int[] locationCells;
-    int numOfHits = 0;
+    private ArrayList<String> locationCells;
+//    int numOfHits = 0;
 
-    public void setLocationCells(int[] locs){
+    public void setLocationCells(ArrayList<String> locs){
         locationCells = locs;
     }
 
     public String checkYourself(String stringGuess){
-        int guess = Integer.parseInt(stringGuess);// string->int 大的往小的转
+//        int guess = Integer.parseInt(stringGuess);// string->int 大的往小的转
         String result = "miss";
-        for (int cell : locationCells) {//增强版for，可用于array和sets
-            if (cell == guess) {
-                result = "hit";
-                numOfHits++;
-                break;
-            }
-        }
-        if (numOfHits == locationCells.length){
+        int index = locationCells.indexOf(stringGuess);
+        if (index >= 0){
+            locationCells.remove(index);
+
+        if (locationCells.isEmpty()){
             result = "kill";
         }
+        else{
+            result = "hit";
+        }}
         System.out.println(result);
         return result;
     }
@@ -59,15 +60,20 @@ public class SimpleDotComTestDrive {
 
         SimpleDotCom dot = new SimpleDotCom();
         int randomNum = (int) (Math.random() * 5);
+        System.out.println("randomNum: " + randomNum);
 
-        int[] locations = {randomNum, randomNum + 1, randomNum + 2};
+        ArrayList<String> locations = new ArrayList<String>();
+        locations.add(Integer.toString(randomNum));
+        locations.add(Integer.toString(randomNum+1));
+        locations.add(Integer.toString(randomNum+2));
+
         dot.setLocationCells(locations);
         boolean isAlive = true;
 
         while(isAlive == true){
             String guess = helper.getUserInput("enter a number");
             String result = dot.checkYourself(guess);
-            numOfGuesses++;
+            numOfGuesses++;//出现bug
             if (result.equals("kill")){
                 isAlive = false;
                 System.out.println("You took" + numOfGuesses + "guesses");
